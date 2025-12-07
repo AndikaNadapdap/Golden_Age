@@ -435,7 +435,7 @@
                                 </div>
                                 <h3>Komunitas Aktif</h3>
                                 <p>Bergabung dengan ribuan orang tua untuk berbagi pengalaman dan tips.</p>
-                            </div>
+                            </div>   
                         </div>
                         <div class="col-md-6">
                             <div class="about-card">
