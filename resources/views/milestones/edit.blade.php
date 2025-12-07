@@ -113,7 +113,7 @@
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> 
 
                     <!-- Tips -->
                     <div class="col-md-12 mb-3">
