@@ -108,7 +108,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/stimulations/{stimulation}', [StimulationController::class, 'update'])->name('stimulations.update');
     Route::delete('/stimulations/{stimulation}', [StimulationController::class, 'destroy'])->name('stimulations.destroy');
 
-    // Milestone  Admin 
+    // Milestone  Admin   
     Route::get('/milestones/create/new', [MilestoneController::class, 'create'])->name('milestones.create');
     Route::post('/milestones/store', [MilestoneController::class, 'store'])->name('milestones.store');
     Route::get('/milestones/{milestone}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');

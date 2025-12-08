@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    // Tampilkan profile
+    // Tampilkan profile  
     public function index()
     {
         $user = Auth::user();
