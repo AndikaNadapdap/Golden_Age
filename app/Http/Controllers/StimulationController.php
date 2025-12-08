@@ -22,7 +22,7 @@ class StimulationController extends Controller
             $query->where('age_range', $request->age_range);
         }
 
-        // Search
+        // Search 
         if ($request->has('search') && $request->search != '') {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
