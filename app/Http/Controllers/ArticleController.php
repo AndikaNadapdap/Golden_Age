@@ -131,7 +131,7 @@ class ArticleController extends Controller
                         ->with('success', 'Artikel berhasil diupdate!');
     }
 
-    // Hapus artikel (Admin)
+    // Hapus artikel (Admin) 
     public function destroy($id)
     {
         $article = Article::findOrFail($id);

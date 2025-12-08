@@ -35,7 +35,7 @@ class Article extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Auto generate slug dari title
+    // Auto generate slug dari title 
     public static function boot()
     {
         parent::boot();
