@@ -108,14 +108,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/stimulations/{stimulation}', [StimulationController::class, 'update'])->name('stimulations.update');
     Route::delete('/stimulations/{stimulation}', [StimulationController::class, 'destroy'])->name('stimulations.destroy');
 
-    // Milestone Admin
+    // Milestone  Admin
     Route::get('/milestones/create/new', [MilestoneController::class, 'create'])->name('milestones.create');
     Route::post('/milestones/store', [MilestoneController::class, 'store'])->name('milestones.store');
     Route::get('/milestones/{milestone}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');
     Route::put('/milestones/{milestone}', [MilestoneController::class, 'update'])->name('milestones.update');
     Route::delete('/milestones/{milestone}', [MilestoneController::class, 'destroy'])->name('milestones.destroy');
 
-    // Manajemen Dokter Admin  
+    // Manajemen Dokter Admin 
     Route::get('/admin/doctors', [DoctorManagementController::class, 'index'])->name('admin.doctors.index');
     Route::get('/admin/doctors/create', [DoctorManagementController::class, 'create'])->name('admin.doctors.create');
     Route::post('/admin/doctors', [DoctorManagementController::class, 'store'])->name('admin.doctors.store');

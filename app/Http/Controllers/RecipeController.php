@@ -111,7 +111,7 @@ class RecipeController extends Controller
         return view('recipes.edit', compact('recipe'));
     }
 
-    // Update resep (Admin)
+    // Update resep (Admin) 
     public function update(Request $request, $id)
     {
         $recipe = Recipe::findOrFail($id);

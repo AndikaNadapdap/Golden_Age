@@ -84,7 +84,7 @@ class Recipe extends Model
         $this->increment('likes');
     }
 
-    // Get ingredients as array
+    // Get ingredients as array 
     public function getIngredientsArrayAttribute()
     {
         return explode("\n", $this->ingredients);
