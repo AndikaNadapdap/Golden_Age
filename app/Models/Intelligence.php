@@ -8,3 +8,4 @@ class Intelligence extends Model
 {
     //
 }
+ 
