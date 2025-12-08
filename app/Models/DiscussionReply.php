@@ -39,7 +39,3 @@ class DiscussionReply extends Model
         $this->increment('likes');
     }
 }
-<<<<<<< HEAD
-=======
- 
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

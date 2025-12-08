@@ -54,15 +54,12 @@ class DiscussionController extends Controller
     // Form membuat diskusi baru
     public function create()
     {
-<<<<<<< HEAD
         // Allow parent and doctor to create discussions
         if (auth()->user()->role === 'admin') {
             return redirect()->route('discussions.index')
                            ->with('error', 'Admin tidak dapat membuat diskusi.');
         }
 
-=======
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         $categories = ['Kehamilan', 'MPASI', 'Kesehatan', 'Perkembangan', 'Lainnya'];
         return view('discussions.create', compact('categories'));
     }
@@ -70,15 +67,12 @@ class DiscussionController extends Controller
     // Simpan diskusi baru
     public function store(Request $request)
     {
-<<<<<<< HEAD
         // Block admin from creating discussions
         if (auth()->user()->role === 'admin') {
             return redirect()->route('discussions.index')
                            ->with('error', 'Admin tidak dapat membuat diskusi.');
         }
 
-=======
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
@@ -87,11 +81,7 @@ class DiscussionController extends Controller
 
         Discussion::create([
             'title' => $request->title,
-<<<<<<< HEAD
             'slug' => Str::slug($request->title) . '-' . time(),
-=======
-            'slug' => Str::slug($request->title),
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
             'content' => $request->content,
             'category' => $request->category,
             'user_id' => auth()->id(),
@@ -157,7 +147,6 @@ class DiscussionController extends Controller
         
         return back()->with('success', 'Diskusi ditutup!');
     }
-<<<<<<< HEAD
 
     // Hapus diskusi (pemilik atau admin)
     public function destroy($id)
@@ -196,6 +185,3 @@ class DiscussionController extends Controller
         return back()->with('success', 'Balasan berhasil dihapus!');
     }
 }
-=======
-}   
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

@@ -22,11 +22,7 @@ return new class extends Migration
             $table->text('tips')->nullable(); // Tips untuk orang tua
             $table->timestamps();
         });
-<<<<<<< HEAD
     }
-=======
-    } 
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
     /**
      * Reverse the migrations.
@@ -35,8 +31,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('milestones');
     }
-<<<<<<< HEAD
 };
-=======
-}; 
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

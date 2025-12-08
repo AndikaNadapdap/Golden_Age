@@ -111,11 +111,7 @@ class RecipeController extends Controller
         return view('recipes.edit', compact('recipe'));
     }
 
-<<<<<<< HEAD
     // Update resep (Admin)
-=======
-    // Update resep (Admin) 
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
     public function update(Request $request, $id)
     {
         $recipe = Recipe::findOrFail($id);
@@ -175,11 +171,5 @@ class RecipeController extends Controller
         $recipe->incrementLikes();
 
         return response()->json(['likes' => $recipe->likes]);
-<<<<<<< HEAD
     }
 }
-=======
-    }  
-}
-  
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

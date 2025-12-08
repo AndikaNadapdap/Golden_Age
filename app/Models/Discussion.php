@@ -85,10 +85,6 @@ class Discussion extends Model
             if (empty($discussion->slug)) {
                 $discussion->slug = Str::slug($discussion->title);
             }
-<<<<<<< HEAD
         });
-=======
-        }); 
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
     }
 }
