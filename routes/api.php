@@ -19,4 +19,8 @@ Route::get('/user', function (Request $request) {
 Route::prefix('auth')->group(function () {
     Route::get('/google/redirect', [GoogleAuthController::class, 'apiRedirectToGoogle']);
     Route::get('/google/callback', [GoogleAuthController::class, 'apiHandleGoogleCallback']);
+    
+    // Facebook OAuth API
+    Route::get('/facebook/redirect', [FacebookAuthController::class, 'apiRedirectToFacebook']);
+    Route::get('/facebook/callback', [FacebookAuthController::class, 'apiHandleFacebookCallback']);
 });
