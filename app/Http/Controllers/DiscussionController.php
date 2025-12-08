@@ -135,4 +135,4 @@ class DiscussionController extends Controller
         
         return back()->with('success', 'Diskusi ditutup!');
     }
-}
+}   
