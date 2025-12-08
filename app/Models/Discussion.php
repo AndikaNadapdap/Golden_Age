@@ -85,6 +85,6 @@ class Discussion extends Model
             if (empty($discussion->slug)) {
                 $discussion->slug = Str::slug($discussion->title);
             }
-        });
+        }); 
     }
 }

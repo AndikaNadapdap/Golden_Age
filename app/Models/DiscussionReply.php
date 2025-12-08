@@ -39,3 +39,4 @@ class DiscussionReply extends Model
         $this->increment('likes');
     }
 }
+ 
