@@ -31,7 +31,7 @@ class MilestoneController extends Controller
         return view('milestones.show', compact('milestone'));
     }
 
-    // Admin CRUD Methods
+    // Admin CRUD Methods 
     public function create()
     {
         return view('milestones.create');
