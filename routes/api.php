@@ -15,3 +15,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Google OAuth API
+Route::prefix('auth')->group(function () {
+    Route::get('/google/redirect', [GoogleAuthController::class, 'apiRedirectToGoogle']);
+    Route::get('/google/callback', [GoogleAuthController::class, 'apiHandleGoogleCallback']);
+});
