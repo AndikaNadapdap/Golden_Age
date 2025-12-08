@@ -122,7 +122,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/doctors/{id}', [DoctorManagementController::class, 'destroy'])->name('admin.doctors.destroy');
     Route::post('/admin/doctors/{id}/reset-password', [DoctorManagementController::class, 'resetPassword'])->name('admin.doctors.reset-password');
 
-    // Admin Tracker Monitoring
+    // Admin Tracker Monitoring 
     Route::get('/admin/tracker/progress', [TrackerController::class, 'progress'])->name('admin.tracker.progress');
     Route::get('/admin/tracker/detail/{user}', [TrackerController::class, 'detail'])->name('admin.tracker.detail');
 });
