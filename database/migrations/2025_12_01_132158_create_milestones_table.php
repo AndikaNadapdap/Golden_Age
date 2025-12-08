@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('tips')->nullable(); // Tips untuk orang tua
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
