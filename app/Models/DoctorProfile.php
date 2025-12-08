@@ -22,3 +22,4 @@ class DoctorProfile extends Model
         return $this->belongsTo(User::class);
     }
 }
+ 
