@@ -83,3 +83,7 @@ class DoctorManagementController extends Controller
         return back()->with('success', 'Password dokter berhasil direset.');
     }
 }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

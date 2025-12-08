@@ -335,23 +335,6 @@
                 </button>
             </form>
 
-<<<<<<< HEAD
-            <div class="text-center my-3">
-                <span class="text-muted">atau</span>
-            </div>
-
-            <a href="{{ route('auth.google') }}" class="btn btn-outline-danger w-100 mb-2">
-                <i class="bi bi-google me-2"></i>
-                Daftar dengan Google
-            </a>
-
-            <a href="{{ route('auth.facebook') }}" class="btn btn-outline-primary w-100">
-                <i class="bi bi-facebook me-2"></i>
-                Daftar dengan Facebook
-            </a>
-
-=======
->>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
             <div class="login-link">
                 Sudah punya akun? <a href="{{ route('login') }}">Masuk Sekarang</a>
             </div>

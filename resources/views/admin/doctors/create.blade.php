@@ -17,7 +17,11 @@
         }
         .card {
             border: none;
+<<<<<<< HEAD
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+=======
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);   
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         }
     </style>
 </head>

@@ -127,6 +127,7 @@
                                     <div>
                                         <small class="text-muted">oleh <strong>{{ $discussion->author->name }}</strong> • {{ $discussion->created_at->diffForHumans() }}</small>
                                     </div>
+<<<<<<< HEAD
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="stats">
                                             <span class="me-3"><i class="bi bi-chat"></i> {{ $discussion->replies_count }}</span>
@@ -144,6 +145,11 @@
                                                 </form>
                                             @endif
                                         @endauth
+=======
+                                    <div class="stats">
+                                        <span class="me-3"><i class="bi bi-chat"></i>{{ $discussion->replies_count }}</span>
+                                        <span><i class="bi bi-heart"></i>{{ $discussion->likes }}</span>
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                     </div>
                                 </div>
                             </div>
@@ -164,3 +170,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

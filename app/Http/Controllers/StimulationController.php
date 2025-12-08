@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Stimulation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Storage;
+=======
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
 class StimulationController extends Controller
 {
@@ -23,7 +26,11 @@ class StimulationController extends Controller
             $query->where('age_range', $request->age_range);
         }
 
+<<<<<<< HEAD
         // Search
+=======
+        // Search 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         if ($request->has('search') && $request->search != '') {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
@@ -67,7 +74,11 @@ class StimulationController extends Controller
             'instructions' => 'required|string',
             'benefits' => 'nullable|string',
             'duration' => 'nullable|integer',
+<<<<<<< HEAD
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+=======
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         ]);
 
         $validated['slug'] = Str::slug($request->title);
@@ -96,6 +107,7 @@ class StimulationController extends Controller
     {
         $stimulation = Stimulation::findOrFail($id);
 
+<<<<<<< HEAD
         // Debug: cek apakah file diterima
         \Log::info('Has File Image: ' . ($request->hasFile('image') ? 'YES' : 'NO'));
         if ($request->hasFile('image')) {
@@ -103,6 +115,8 @@ class StimulationController extends Controller
             \Log::info('File Size: ' . $request->file('image')->getSize());
         }
 
+=======
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -112,7 +126,11 @@ class StimulationController extends Controller
             'instructions' => 'required|string',
             'benefits' => 'nullable|string',
             'duration' => 'nullable|integer',
+<<<<<<< HEAD
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+=======
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         ]);
 
         $validated['slug'] = Str::slug($request->title);
@@ -120,14 +138,22 @@ class StimulationController extends Controller
         // Handle image upload
         if ($request->hasFile('image')) {
             // Hapus image lama jika ada
+<<<<<<< HEAD
             if ($stimulation->image && Storage::disk('public')->exists($stimulation->image)) {
                 Storage::disk('public')->delete($stimulation->image);
+=======
+            if ($stimulation->image && \Storage::disk('public')->exists($stimulation->image)) {
+                \Storage::disk('public')->delete($stimulation->image);
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
             }
 
             $imagePath = $request->file('image')->store('stimulations', 'public');
             $validated['image'] = $imagePath;
+<<<<<<< HEAD
             
             \Log::info('Image saved to: ' . $imagePath);
+=======
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         }
 
         $stimulation->update($validated);
@@ -142,8 +168,13 @@ class StimulationController extends Controller
         $stimulation = Stimulation::findOrFail($id);
 
         // Hapus image jika ada
+<<<<<<< HEAD
         if ($stimulation->image && Storage::disk('public')->exists($stimulation->image)) {
             Storage::disk('public')->delete($stimulation->image);
+=======
+        if ($stimulation->image && \Storage::disk('public')->exists($stimulation->image)) {
+            \Storage::disk('public')->delete($stimulation->image);
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         }
 
         $stimulation->delete();

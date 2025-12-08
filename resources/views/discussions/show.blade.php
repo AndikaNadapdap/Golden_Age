@@ -120,6 +120,7 @@
             </div>
 
             @auth
+<<<<<<< HEAD
                 <div class="mt-3 d-flex gap-2">
                     @if(auth()->id() == $discussion->user_id && !$discussion->is_closed)
                         <form action="{{ route('discussions.close', $discussion->id) }}" method="POST" class="d-inline">
@@ -140,6 +141,18 @@
                         </form>
                     @endif
                 </div>
+=======
+                @if(auth()->id() == $discussion->user_id && !$discussion->is_closed)
+                    <div class="mt-3">
+                        <form action="{{ route('discussions.close', $discussion->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-lock me-1"></i>Tutup Diskusi
+                            </button>
+                        </form>
+                    </div>
+                @endif
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
             @endauth
         </div>
 
@@ -157,6 +170,7 @@
                                         <strong>{{ $reply->author->name }}</strong>
                                         <small class="text-muted ms-2">{{ $reply->created_at->diffForHumans() }}</small>
                                     </div>
+<<<<<<< HEAD
                                     <div class="d-flex gap-2">
                                         <button onclick="likeReply({{ $reply->id }})" class="btn btn-sm btn-light" id="replyLikeBtn{{ $reply->id }}">
                                             <i class="bi bi-heart me-1"></i><span id="replyLikeCount{{ $reply->id }}">{{ $reply->likes }}</span>
@@ -174,6 +188,11 @@
                                             @endif
                                         @endauth
                                     </div>
+=======
+                                    <button onclick="likeReply({{ $reply->id }})" class="btn btn-sm btn-light" id="replyLikeBtn{{ $reply->id }}">
+                                        <i class="bi bi-heart me-1"></i><span id="replyLikeCount{{ $reply->id }}">{{ $reply->likes }}</span>
+                                    </button>
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                 </div>
                                 <p class="mb-0">{!! nl2br(e($reply->content)) !!}</p>
                             </div>

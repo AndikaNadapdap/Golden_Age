@@ -41,6 +41,7 @@
 </head>
 <body>
     <!-- Navbar -->
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
@@ -92,6 +93,9 @@
             </div>
         </div>
     </nav>
+=======
+    @include('partials.navbar')
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -164,6 +168,12 @@
                                         <a href="{{ route('milestones.edit', $milestone->id) }}" class="btn btn-update">
                                             <i class="bi bi-arrow-repeat"></i> Update
                                         </a>
+<<<<<<< HEAD
+=======
+                                        <a href="{{ route('milestones.show', $milestone->slug) }}" class="btn btn-detail">
+                                            <i class="bi bi-info-circle"></i> Detail
+                                        </a>
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                         <form action="{{ route('milestones.destroy', $milestone->id) }}" method="POST" style="flex: 1;" 
                                               onsubmit="return confirm('Yakin ingin menghapus milestone ini?')">
                                             @csrf
@@ -194,3 +204,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

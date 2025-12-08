@@ -10,8 +10,11 @@ use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\MilestoneController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DoctorManagementController;
+<<<<<<< HEAD
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\FacebookAuthController;
+=======
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
 // Halaman Home (About Website)
 Route::get('/', function () {
@@ -34,6 +37,7 @@ Route::post('/register', [AuthController::class, 'register']);
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+<<<<<<< HEAD
 // Google OAuth
 Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
@@ -56,6 +60,22 @@ Route::post('/recipes/{id}/like', [RecipeController::class, 'like'])->middleware
 Route::get('/stimulations', [StimulationController::class, 'index'])->name('stimulations.index');
 Route::get('/stimulations/{slug}', [StimulationController::class, 'show'])->name('stimulations.show');
 Route::post('/stimulations/{id}/like', [StimulationController::class, 'like'])->middleware('auth')->name('stimulations.like');
+=======
+// Artikel (Public)
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{slug}', [ArticleController::class, 'show'])->middleware('auth')->name('articles.show');
+Route::post('/articles/{id}/like', [ArticleController::class, 'like'])->name('articles.like');
+
+// Resep MPASI (Public)
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
+Route::get('/recipes/{slug}', [RecipeController::class, 'show'])->middleware('auth')->name('recipes.show');
+Route::post('/recipes/{id}/like', [RecipeController::class, 'like'])->name('recipes.like');
+
+// Stimulasi & Permainan (Public Index, Auth untuk Detail)
+Route::get('/stimulations', [StimulationController::class, 'index'])->name('stimulations.index');
+Route::get('/stimulations/{slug}', [StimulationController::class, 'show'])->middleware('auth')->name('stimulations.show');
+Route::post('/stimulations/{id}/like', [StimulationController::class, 'like'])->name('stimulations.like');
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
 // Tracker Sensorik (Auth Required)
 Route::get('/tracker', [TrackerController::class, 'index'])->name('tracker.index');
@@ -69,6 +89,7 @@ Route::get('/milestones/{slug}', [MilestoneController::class, 'show'])->name('mi
 
 // Forum Diskusi (Public)
 Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions.index');
+<<<<<<< HEAD
 Route::get('/discussions/create', [DiscussionController::class, 'create'])->middleware('auth')->name('discussions.create');
 Route::post('/discussions', [DiscussionController::class, 'store'])->middleware('auth')->name('discussions.store');
 Route::get('/discussions/{slug}', [DiscussionController::class, 'show'])->name('discussions.show');
@@ -77,6 +98,10 @@ Route::post('/discussions/{id}/reply', [DiscussionController::class, 'reply'])->
 Route::post('/discussions/{id}/close', [DiscussionController::class, 'close'])->middleware('auth')->name('discussions.close');
 Route::delete('/discussions/{id}', [DiscussionController::class, 'destroy'])->middleware('auth')->name('discussions.destroy');
 Route::delete('/discussions/replies/{id}', [DiscussionController::class, 'destroyReply'])->middleware('auth')->name('discussions.reply.destroy');
+=======
+Route::get('/discussions/{slug}', [DiscussionController::class, 'show'])->name('discussions.show');
+Route::post('/discussions/{id}/like', [DiscussionController::class, 'like'])->name('discussions.like');
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 Route::post('/discussions/replies/{id}/like', [DiscussionController::class, 'likeReply'])->name('discussions.reply.like');
 
 // Route untuk user yang sudah login (bukan admin)
@@ -88,6 +113,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/child', [ProfileController::class, 'addChild'])->name('profile.child.add');
     Route::put('/profile/child/{id}', [ProfileController::class, 'updateChild'])->name('profile.child.update');
     Route::delete('/profile/child/{id}', [ProfileController::class, 'deleteChild'])->name('profile.child.delete');
+<<<<<<< HEAD
+=======
+    
+    // Forum Diskusi - User bisa buat dan reply
+    Route::get('/discussions/create', [DiscussionController::class, 'create'])->name('discussions.create');
+    Route::post('/discussions', [DiscussionController::class, 'store'])->name('discussions.store');
+    Route::post('/discussions/{id}/reply', [DiscussionController::class, 'reply'])->name('discussions.reply');
+    Route::post('/discussions/{id}/close', [DiscussionController::class, 'close'])->name('discussions.close');
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 });
 
 // Route khusus Admin

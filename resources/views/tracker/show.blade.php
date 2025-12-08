@@ -17,7 +17,11 @@
             background: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+<<<<<<< HEAD
 k
+=======
+
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
         .navbar {
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);

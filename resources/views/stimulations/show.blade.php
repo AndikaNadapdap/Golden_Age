@@ -62,11 +62,15 @@
     </nav>
 
     <div class="header-image">
+<<<<<<< HEAD
         @if($stimulation->image)
             <img src="{{ asset('storage/' . $stimulation->image) }}" alt="{{ $stimulation->title }}" style="width: 100%; height: 400px; object-fit: cover;">
         @else
             <i class="bi bi-puzzle" style="font-size: 120px; color: var(--primary-color);"></i>
         @endif
+=======
+        <i class="bi bi-puzzle" style="font-size: 120px; color: var(--primary-color);"></i>
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
     </div>
 
     <div class="container pb-5">

@@ -17,8 +17,11 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+<<<<<<< HEAD
         'google_id',
         'facebook_id',
+=======
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
     ];
 
     // Kolom yang disembunyikan saat model di-serialize

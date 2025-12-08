@@ -167,6 +167,7 @@
                                                     </button>
                                                 </form>
                                             </div>
+<<<<<<< HEAD
                                         @else
                                             <!-- User Button -->
                                             <div class="mt-3">
@@ -182,6 +183,9 @@
                                                 <i class="bi bi-book-half me-2"></i>Lihat Resep
                                             </a>
                                         </div>
+=======
+                                        @endif
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                     @endauth
                                 </div>
                             </div>
@@ -200,4 +204,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>   
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

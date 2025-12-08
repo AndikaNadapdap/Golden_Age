@@ -131,7 +131,11 @@ class ArticleController extends Controller
                         ->with('success', 'Artikel berhasil diupdate!');
     }
 
+<<<<<<< HEAD
     // Hapus artikel (Admin)
+=======
+    // Hapus artikel (Admin) 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
     public function destroy($id)
     {
         $article = Article::findOrFail($id);
@@ -146,4 +150,8 @@ class ArticleController extends Controller
         return redirect()->route('articles.index')
                         ->with('success', 'Artikel berhasil dihapus!');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

@@ -113,7 +113,11 @@
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+<<<<<<< HEAD
                     </div>
+=======
+                    </div> 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
 
                     <!-- Tips -->
                     <div class="col-md-12 mb-3">

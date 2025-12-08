@@ -142,11 +142,15 @@
                             <div class="stimulation-card">
                                 <div class="position-relative">
                                     <div class="stimulation-image">
+<<<<<<< HEAD
                                         @if($stimulation->image)
                                             <img src="{{ asset('storage/' . $stimulation->image) }}" alt="{{ $stimulation->title }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
                                         @else
                                             <i class="bi bi-puzzle" style="font-size: 72px; color: var(--primary-color);"></i>
                                         @endif
+=======
+                                        <i class="bi bi-puzzle" style="font-size: 72px; color: var(--primary-color);"></i>
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                     </div>
                                     <span class="age-badge">{{ $stimulation->age_range }}</span>
                                 </div>
@@ -178,6 +182,7 @@
                                                     </button>
                                                 </form>
                                             </div>
+<<<<<<< HEAD
                                         @else
                                             <!-- User Button -->
                                             <div class="mt-3">
@@ -193,6 +198,9 @@
                                                 <i class="bi bi-play-circle me-2"></i>Lihat Detail
                                             </a>
                                         </div>
+=======
+                                        @endif
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                     @endauth
                                 </div>
                             </div>
@@ -207,8 +215,17 @@
                 </div>
             @endif
         </div>
+<<<<<<< HEAD
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+=======
+    </section> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body> 
+</html>   
+ 
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9

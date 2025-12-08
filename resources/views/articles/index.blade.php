@@ -457,6 +457,7 @@
                                                     </button>
                                                 </form>
                                             </div>
+<<<<<<< HEAD
                                         @else
                                             <!-- User Button -->
                                             <div class="mt-3">
@@ -472,6 +473,9 @@
                                                 <i class="bi bi-book-half me-2"></i>Baca Selengkapnya
                                             </a>
                                         </div>
+=======
+                                        @endif
+>>>>>>> 06c3d90f5d1bf6bf4289c9def1dacefbaf3aa2e9
                                     @endauth
                                 </div>
                             </div>
