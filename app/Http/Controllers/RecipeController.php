@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class RecipeController extends Controller
 {
-    // Tampilkan daftar resep (Public) 
+    // Tampilkan daftar resep (Public)
     public function index(Request $request)
     {
         $query = Recipe::published()->with('author')->latest('published_at');
@@ -171,5 +171,6 @@ class RecipeController extends Controller
         $recipe->incrementLikes();
 
         return response()->json(['likes' => $recipe->likes]);
-    }
+    }  
 }
+  
