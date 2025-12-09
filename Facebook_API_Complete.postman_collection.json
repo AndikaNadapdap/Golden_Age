@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "fb-oauth-api-2024",
+		"name": "Panduan 1000 Hari - Facebook OAuth API",
+		"description": "Complete API collection for Facebook OAuth integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "1. Get Facebook Login URL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/login-url",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "login-url"]
+						},
+						"description": "Get Facebook OAuth login URL for redirect"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Login with Facebook Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"auth_token\", jsonData.data.token);",
+									"    pm.environment.set(\"user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"access_token\": \"{{facebook_access_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "token"]
+						},
+						"description": "Login using Facebook access token from Facebook SDK"
+					},
+					"response": []
+				},
+				{
+					"name": "3. Verify Facebook Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"access_token\": \"{{facebook_access_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/verify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "verify"]
+						},
+						"description": "Verify if Facebook access token is valid"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Handle OAuth Callback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/callback?code={{auth_code}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "callback"],
+							"query": [
+								{
+									"key": "code",
+									"value": "{{auth_code}}"
+								}
+							]
+						},
+						"description": "Handle OAuth callback (usually done by browser redirect)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Protected Routes",
+			"item": [
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/me",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "me"]
+						},
+						"description": "Get authenticated user information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Info (Generic)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": ["{{base_url}}"],
+							"path": ["api", "user"]
+						},
+						"description": "Get user via /api/user endpoint"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"auth_token\");",
+									"pm.environment.unset(\"user_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/facebook/logout",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "facebook", "logout"]
+						},
+						"description": "Logout and revoke current access token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "API Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/up",
+							"host": ["{{base_url}}"],
+							"path": ["up"]
+						},
+						"description": "Check API health status"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "facebook_access_token",
+			"value": "YOUR_FACEBOOK_ACCESS_TOKEN",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "auth_code",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Facebook OAuth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4267B2;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4267B2;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4267B2;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #365899;
+        }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #ffe7e7;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #e7ffe7;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .config-check {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test Facebook OAuth Login</h1>
+        
+        <div class="info">
+            <h3>Informasi</h3>
+            <p>Halaman ini untuk menguji Facebook OAuth login. Pastikan Anda sudah melakukan konfigurasi yang benar di Facebook Developer Console.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Checklist Konfigurasi</h3>
+            <div class="config-check">
+                <input type="checkbox" id="check1">
+                <label for="check1">Facebook App sudah dibuat di <a href="https://developers.facebook.com/" target="_blank">Facebook Developers</a></label>
+            </div>
+            <div class="config-check">
+                <input type="checkbox" id="check2">
+                <label for="check2">Facebook Login product sudah ditambahkan</label>
+            </div>
+            <div class="config-check">
+                <input type="checkbox" id="check3">
+                <label for="check3">Valid OAuth Redirect URIs: <code>http://localhost:8000/auth/facebook/callback</code></label>
+            </div>
+            <div class="config-check">
+                <input type="checkbox" id="check4">
+                <label for="check4">App Domains: <code>localhost</code> dan <code>127.0.0.1</code></label>
+            </div>
+            <div class="config-check">
+                <input type="checkbox" id="check5">
+                <label for="check5">File .env sudah diisi FACEBOOK_CLIENT_ID dan FACEBOOK_CLIENT_SECRET</label>
+            </div>
+            <div class="config-check">
+                <input type="checkbox" id="check6">
+                <label for="check6">Cache sudah dibersihkan: <code>php artisan config:clear</code></label>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test Login Facebook</h3>
+            <p>Klik tombol di bawah untuk menguji login Facebook:</p>
+            <a href="http://localhost:8000/auth/facebook" class="btn">🔵 Test Facebook Login</a>
+            <p style="margin-top: 15px; color: #666;">
+                <strong>Yang akan terjadi:</strong><br>
+                1. Anda akan diarahkan ke halaman login Facebook<br>
+                2. Setelah login, Facebook akan meminta izin untuk membagikan informasi<br>
+                3. Setelah menyetujui, Anda akan diarahkan kembali ke aplikasi<br>
+                4. Jika berhasil, Anda akan login otomatis
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Link Useful</h3>
+            <a href="http://localhost:8000/login" class="btn" style="background: #28a745;">Halaman Login</a>
+            <a href="http://localhost:8000/" class="btn" style="background: #17a2b8;">Home</a>
+            <a href="https://developers.facebook.com/" target="_blank" class="btn" style="background: #6c757d;">Facebook Developers</a>
+        </div>
+
+        <div class="test-section">
+            <h3>❌ Troubleshooting</h3>
+            <p><strong>Jika kembali ke halaman login tanpa error:</strong></p>
+            <ol>
+                <li>Buka browser DevTools (F12) → Tab Network</li>
+                <li>Klik tombol "Test Facebook Login" di atas</li>
+                <li>Lihat request yang terjadi:
+                    <ul>
+                        <li>Harus ada redirect ke <code>facebook.com</code></li>
+                        <li>Setelah login di Facebook, harus ada callback ke <code>/auth/facebook/callback</code></li>
+                    </ul>
+                </li>
+                <li>Jika langsung kembali tanpa ke Facebook, cek log error di <code>storage/logs/laravel.log</code></li>
+            </ol>
+
+            <p><strong>Error umum:</strong></p>
+            <ul>
+                <li><strong>"Can't Load URL"</strong> → Periksa App Domains dan Valid OAuth Redirect URIs</li>
+                <li><strong>"Invalid App ID"</strong> → Periksa FACEBOOK_CLIENT_ID di .env</li>
+                <li><strong>"InvalidStateException"</strong> → Clear browser cookies dan cache</li>
+            </ul>
+
+            <p>Untuk troubleshooting lengkap, baca file <code>FACEBOOK_LOGIN_TROUBLESHOOTING.md</code></p>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Check Laravel Log</h3>
+            <p>Setelah mencoba login, cek log di terminal dengan command:</p>
+            <code style="display: block; padding: 10px; background: #2d2d2d; color: #f8f8f2; margin: 10px 0;">
+                tail -f storage/logs/laravel.log
+            </code>
+            <p>Atau di PowerShell:</p>
+            <code style="display: block; padding: 10px; background: #012456; color: #fff; margin: 10px 0;">
+                Get-Content storage/logs/laravel.log -Tail 50 -Wait
+            </code>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Quick Fix Commands</h3>
+            <p>Jalankan command ini jika ada masalah:</p>
+            <code style="display: block; padding: 10px; background: #2d2d2d; color: #f8f8f2; margin: 10px 0;">
+php artisan config:clear<br>
+php artisan cache:clear<br>
+php artisan route:clear<br>
+php artisan view:clear
+            </code>
+        </div>
+
+        <?php if(isset($_GET['error'])): ?>
+        <div class="error">
+            <h3>⚠️ Error</h3>
+            <p><?php echo htmlspecialchars($_GET['error']); ?></p>
+        </div>
+        <?php endif; ?>
+
+        <?php if(isset($_GET['success'])): ?>
+        <div class="success">
+            <h3>✅ Success</h3>
+            <p><?php echo htmlspecialchars($_GET['success']); ?></p>
+        </div>
+        <?php endif; ?>
+    </div>
+
+    <script>
+        // Auto check dari localStorage
+        for(let i = 1; i <= 6; i++) {
+            const checkbox = document.getElementById('check' + i);
+            const stored = localStorage.getItem('check' + i);
+            if(stored === 'true') {
+                checkbox.checked = true;
+            }
+            checkbox.addEventListener('change', function() {
+                localStorage.setItem('check' + i, this.checked);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -6,8 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Exception;
 
 class GoogleAuthController extends Controller
 {
@@ -16,16 +18,71 @@ class GoogleAuthController extends Controller
      */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        try {
+            Log::info('=== GOOGLE LOGIN START ===', [
+                'session_id' => session()->getId()
+            ]);
+            
+            return Socialite::driver('google')->redirect();
+            
+        } catch (Exception $e) {
+            Log::error('Google OAuth Redirect Error', [
+                'error' => $e->getMessage()
+            ]);
+            
+            return redirect()->route('login')
+                ->with('error', 'Gagal menghubungkan ke Google: ' . $e->getMessage());
+        }
     }
 
     /**
      * Handle Google callback
      */
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(Request $request)
     {
         try {
+            Log::info('=== GOOGLE CALLBACK RECEIVED ===', [
+                'full_url' => $request->fullUrl(),
+                'all_params' => $request->all(),
+                'session_id' => session()->getId(),
+                'has_code' => $request->has('code'),
+                'has_error' => $request->has('error')
+            ]);
+            
+            // Check for error from Google
+            if ($request->has('error')) {
+                Log::warning('Google OAuth: Error from Google', [
+                    'error' => $request->input('error')
+                ]);
+                
+                return redirect()->route('login')
+                    ->with('error', 'Login Google dibatalkan.');
+            }
+
+            // Check if code exists
+            if (!$request->has('code')) {
+                Log::error('Google OAuth: No authorization code');
+                return redirect()->route('login')
+                    ->with('error', 'Kode otorisasi tidak ditemukan.');
+            }
+
+            Log::info('Google OAuth: Getting user from Google');
+
+            // Get user from Google
             $googleUser = Socialite::driver('google')->user();
+            
+            Log::info('Google OAuth: User data retrieved', [
+                'google_id' => $googleUser->getId(),
+                'email' => $googleUser->getEmail(),
+                'name' => $googleUser->getName()
+            ]);
+
+            // Validate email
+            if (!$googleUser->getEmail()) {
+                Log::warning('Google OAuth: No email provided');
+                return redirect()->route('login')
+                    ->with('error', 'Email tidak tersedia dari Google.');
+            }
             
             // Cari user berdasarkan google_id atau email
             $user = User::where('google_id', $googleUser->id)
@@ -33,13 +90,20 @@ class GoogleAuthController extends Controller
                        ->first();
 
             if ($user) {
+                Log::info('Google OAuth: Existing user found', [
+                    'user_id' => $user->id
+                ]);
+                
                 // Update google_id jika belum ada
                 if (!$user->google_id) {
                     $user->update([
                         'google_id' => $googleUser->id,
                     ]);
+                    Log::info('Google OAuth: Updated user with Google ID');
                 }
             } else {
+                Log::info('Google OAuth: Creating new user');
+                
                 // Buat user baru dengan role parent
                 $user = User::create([
                     'name' => $googleUser->name,
@@ -49,15 +113,42 @@ class GoogleAuthController extends Controller
                     'role' => 'parent', // Default role untuk Google login
                     'status' => 'approved',
                 ]);
+                
+                Log::info('Google OAuth: New user created', [
+                    'user_id' => $user->id
+                ]);
             }
 
             // Login user
-            Auth::login($user, true);
+            Auth::login($user, true); // remember = true
+            
+            Log::info('Google OAuth: User authenticated', [
+                'user_id' => $user->id,
+                'auth_check' => Auth::check(),
+                'auth_user' => Auth::user()?->email
+            ]);
 
-            return redirect()->route('home')->with('success', 'Berhasil login dengan Google!');
+            // Regenerate session untuk keamanan
+            $request->session()->regenerate();
+            
+            Log::info('=== GOOGLE LOGIN SUCCESS ===', [
+                'redirecting_to' => 'home',
+                'new_session_id' => session()->getId()
+            ]);
 
-        } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Gagal login dengan Google. Silakan coba lagi.');
+            return redirect()->route('home')
+                ->with('success', 'Berhasil login dengan Google!');
+
+        } catch (Exception $e) {
+            Log::error('Google OAuth: Callback Error', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return redirect()->route('login')
+                ->with('error', 'Terjadi kesalahan saat login: ' . $e->getMessage());
         }
     }
 

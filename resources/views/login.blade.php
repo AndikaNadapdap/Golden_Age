@@ -316,6 +316,15 @@
                 toggleIcon.classList.add('bi-eye');
             }
         }
+
+        // Remove Facebook hash fragment (#_=_)
+        if (window.location.hash === '#_=_') {
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href.split('#')[0]);
+            } else {
+                window.location.hash = '';
+            }
+        }
     </script>
 </body>
 </html>
