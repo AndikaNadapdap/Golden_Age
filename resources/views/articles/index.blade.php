@@ -338,6 +338,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a>
                     </li>
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('discussions.index') }}">Forum Diskusi</a>
+                        </li>
+                    @endif
                     @auth
                         @if(auth()->user()->role === 'admin')
                             <li class="nav-item ms-3">

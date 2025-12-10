@@ -121,6 +121,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('discussions.index') }}">Forum Diskusi</a>
+                    </li>
                     <li class="nav-item ms-3">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
