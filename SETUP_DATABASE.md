@@ -11,6 +11,7 @@ cp .env.example .env
 ```
 
 Atau di Windows PowerShell:
+
 ```powershell
 Copy-Item .env.example .env
 ```
@@ -61,6 +62,7 @@ php artisan key:generate
 ### 5. Create Database
 
 **Option A - Via phpMyAdmin:**
+
 1. Buka `http://localhost/phpmyadmin`
 2. Klik tab "Databases"
 3. Database name: `ppw_1000_hari`
@@ -68,11 +70,13 @@ php artisan key:generate
 5. Klik "Create"
 
 **Option B - Via MySQL Command:**
+
 ```sql
 CREATE DATABASE ppw_1000_hari CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 **Option C - Via Terminal:**
+
 ```bash
 mysql -u root -p -e "CREATE DATABASE ppw_1000_hari CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
@@ -84,15 +88,16 @@ php artisan migrate
 ```
 
 Ini akan membuat semua table:
-- users
-- articles
-- recipes
-- children
-- milestones
-- discussions
-- sessions
-- personal_access_tokens
-- dll.
+
+-   users
+-   articles
+-   recipes
+-   children
+-   milestones
+-   discussions
+-   sessions
+-   personal_access_tokens
+-   dll.
 
 ### 7. **Create Storage Symbolic Link (PENTING!)**
 
@@ -111,6 +116,7 @@ php artisan db:seed
 ```
 
 Atau seed specific seeder:
+
 ```bash
 php artisan db:seed --class=AdminSeeder
 php artisan db:seed --class=DoctorSeeder
@@ -123,6 +129,7 @@ npm run dev
 ```
 
 Atau untuk production:
+
 ```bash
 npm run build
 ```
@@ -156,12 +163,14 @@ Akses: `http://localhost:8000`
 ## 👤 Default Login Credentials
 
 ### Admin
-- Email: `admin@goldenage.com`
-- Password: `admin123`
+
+-   Email: `admin@goldenage.com`
+-   Password: `admin123`
 
 ### Doctor (if seeded)
-- Email: `dr.budi@goldenage.com`
-- Password: `doctor123`
+
+-   Email: `dr.budi@goldenage.com`
+-   Password: `doctor123`
 
 ---
 
@@ -187,19 +196,25 @@ Golden_Age/
 ## 🔧 Troubleshooting
 
 ### Error: "Access denied for user 'root'@'localhost'"
+
 **Solusi:** Update password di `.env`:
+
 ```env
 DB_PASSWORD=your_mysql_password
 ```
 
 ### Error: "Base table or view not found"
+
 **Solusi:** Run migrations:
+
 ```bash
 php artisan migrate
 ```
 
 ### Error: "419 PAGE EXPIRED"
+
 **Solusi:** Clear cache dan pastikan sessions table ada:
+
 ```bash
 php artisan config:clear
 php artisan cache:clear
@@ -207,7 +222,9 @@ php artisan migrate
 ```
 
 ### Error: "Class 'Socialite' not found"
+
 **Solusi:** Install dependencies:
+
 ```bash
 composer install
 ```
@@ -215,18 +232,21 @@ composer install
 ### **Gambar Upload Tidak Muncul**
 
 **Penyebab:**
-- Symbolic link storage belum dibuat
-- Permission folder salah
-- Path gambar salah di blade
+
+-   Symbolic link storage belum dibuat
+-   Permission folder salah
+-   Path gambar salah di blade
 
 **Solusi:**
 
 1. **Create symbolic link:**
+
 ```bash
 php artisan storage:link
 ```
 
 2. **Verify symbolic link exists:**
+
 ```bash
 # Windows PowerShell
 Test-Path "public\storage"
@@ -236,6 +256,7 @@ ls -la public/storage
 ```
 
 3. **Check uploaded files:**
+
 ```bash
 # Windows
 dir storage\app\public\articles
@@ -245,19 +266,23 @@ ls -la storage/app/public/articles
 ```
 
 4. **Fix permissions (Linux/Mac):**
+
 ```bash
 chmod -R 775 storage
 chown -R www-data:www-data storage
 ```
 
 5. **Test upload:**
-- Login sebagai admin
-- Upload artikel dengan gambar
-- Cek apakah file ada di `storage/app/public/articles/`
-- Akses: `http://localhost:8000/storage/articles/namafile.jpg`
+
+-   Login sebagai admin
+-   Upload artikel dengan gambar
+-   Cek apakah file ada di `storage/app/public/articles/`
+-   Akses: `http://localhost:8000/storage/articles/namafile.jpg`
 
 ### Error: "The stream or file could not be opened"
+
 **Solusi:** Fix permissions:
+
 ```bash
 # Linux/Mac
 chmod -R 775 storage bootstrap/cache
@@ -268,7 +293,9 @@ icacls bootstrap\cache /grant Users:F /T
 ```
 
 ### Error: "Symlink target already exists"
+
 **Solusi:** Hapus symbolic link lama dan buat baru:
+
 ```bash
 # Windows
 rmdir public\storage
@@ -297,7 +324,7 @@ Expected output: All migrations should show "Ran"
 # Windows
 Test-Path "public\storage"
 
-# Linux/Mac  
+# Linux/Mac
 ls -la public/ | grep storage
 ```
 
@@ -327,17 +354,17 @@ Expected: `drwxrwxr-x` or similar (775 permissions)
 
 ## 📝 Post-Setup Checklist
 
-- [ ] `.env` file configured
-- [ ] Database `ppw_1000_hari` created
-- [ ] Migrations run successfully
-- [ ] **Storage symbolic link created** ⭐
-- [ ] Composer dependencies installed
-- [ ] NPM dependencies installed
-- [ ] Application key generated
-- [ ] Cache cleared
-- [ ] Admin account seeded
-- [ ] Can login as admin
-- [ ] **Can upload and see images** ⭐
+-   [ ] `.env` file configured
+-   [ ] Database `ppw_1000_hari` created
+-   [ ] Migrations run successfully
+-   [ ] **Storage symbolic link created** ⭐
+-   [ ] Composer dependencies installed
+-   [ ] NPM dependencies installed
+-   [ ] Application key generated
+-   [ ] Cache cleared
+-   [ ] Admin account seeded
+-   [ ] Can login as admin
+-   [ ] **Can upload and see images** ⭐
 
 ---
 
@@ -355,7 +382,7 @@ npm install && npm run dev
 
 # Clear everything
 php artisan config:clear
-php artisan cache:clear  
+php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
@@ -368,6 +395,7 @@ php artisan serve
 ## 📞 Need Help?
 
 ### Check Logs
+
 ```bash
 # Latest errors
 tail -f storage/logs/laravel.log
@@ -379,6 +407,7 @@ Get-Content storage/logs/laravel.log -Tail 50 -Wait
 ### Debug Upload
 
 Add to `ArticleController.php` temporarily:
+
 ```php
 if ($request->hasFile('image')) {
     $image = $request->file('image');
@@ -388,9 +417,9 @@ if ($request->hasFile('image')) {
         'mime' => $image->getMimeType(),
         'path' => $image->getRealPath()
     ]);
-    
+
     $imagePath = $image->store('articles', 'public');
-    
+
     \Log::info('Image Stored', [
         'path' => $imagePath,
         'full_path' => storage_path('app/public/' . $imagePath),
@@ -416,9 +445,9 @@ Then check `storage/logs/laravel.log` after upload.
 
 ## 📚 Additional Resources
 
-- [Laravel File Storage Documentation](https://laravel.com/docs/filesystem)
-- [Laravel Migrations Documentation](https://laravel.com/docs/migrations)
-- [Laravel Seeding Documentation](https://laravel.com/docs/seeding)
+-   [Laravel File Storage Documentation](https://laravel.com/docs/filesystem)
+-   [Laravel Migrations Documentation](https://laravel.com/docs/migrations)
+-   [Laravel Seeding Documentation](https://laravel.com/docs/seeding)
 
 ---
 

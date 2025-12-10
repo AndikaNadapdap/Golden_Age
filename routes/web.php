@@ -13,8 +13,15 @@ use App\Http\Controllers\Admin\DoctorManagementController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\FacebookAuthController;
 
-// Halaman Home (About Website)
+// Halaman Home - Redirect berdasarkan role
 Route::get('/', function () {
+    if (auth()->check()) {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        // Parent/Doctor bisa ke halaman welcome atau home biasa
+        return view('welcome');
+    }
     return view('home');
 })->name('home');
 
