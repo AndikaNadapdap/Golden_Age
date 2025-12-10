@@ -17,7 +17,6 @@
         .info-box { background: #f8fafc; border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
         .benefit-item { padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; }
         .benefit-item:last-child { border-bottom: none; }
-        .btn-outline-danger.liked { background: #FEE2E2; border-color: #DC2626; color: #DC2626; }
     </style>
 </head>
 <body class="bg-light">
@@ -127,9 +126,12 @@
             </div>
 
             <div class="d-flex gap-3 mt-4">
-                <button onclick="likeStimulation({{ $stimulation->id }})" class="btn btn-outline-danger" id="likeBtn">
-                    <i class="bi bi-heart me-2"></i>Suka (<span id="likeCount">{{ $stimulation->likes }}</span>)
-                </button>
+                <form action="{{ route('stimulations.like', $stimulation->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="bi bi-heart me-2"></i>Suka ({{ $stimulation->likes }})
+                    </button>
+                </form>
                 <a href="{{ route('stimulations.index') }}" class="btn btn-primary">
                     <i class="bi bi-grid me-2"></i>Lihat Aktivitas Lainnya
                 </a>
@@ -138,26 +140,5 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function likeStimulation(id) {
-            fetch(`/stimulations/${id}/like`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('likeCount').textContent = data.likes;
-                    document.getElementById('likeBtn').classList.add('liked');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
 </body>
 </html>

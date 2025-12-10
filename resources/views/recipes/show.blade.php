@@ -144,7 +144,6 @@
                     <button onclick="likeRecipe({{ $recipe->id }})" class="like-btn" id="likeBtn">
                         <i class="bi bi-heart me-2"></i><span id="likeCount">{{ $recipe->likes }}</span> Suka
                     </button>
-                    <span class="text-muted"><i class="bi bi-eye me-1"></i>{{ $recipe->views }} views</span>
                 </div>
             </div>
 

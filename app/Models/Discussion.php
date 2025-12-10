@@ -40,6 +40,25 @@ class Discussion extends Model
         return $this->hasMany(DiscussionReply::class)->latest();
     }
 
+    // Relasi dengan users yang like diskusi ini
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'discussion_user_likes')->withTimestamps();
+    }
+
+    // Check if user has liked this discussion
+    public function isLikedBy($user)
+    {
+        if (!$user) return false;
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
+    }
+
+    // Get total likes
+    public function getLikesAttribute()
+    {
+        return $this->likedByUsers()->count();
+    }
+
     // Scope untuk filter category
     public function scopeByCategory($query, $category)
     {

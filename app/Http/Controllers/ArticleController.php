@@ -66,16 +66,33 @@ class ArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'excerpt' => 'required|string|max:500',
+            'excerpt' => 'nullable|string|max:500',
             'category' => 'required|string',
-            'author' => 'required|string|max:255',
             'references' => 'nullable|string',
-            'published_at' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $validated['user_id'] = auth()->id();
-        $validated['slug'] = Str::slug($request->title);
+        
+        // Generate unique slug
+        $slug = Str::slug($request->title);
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Article::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+        
+        $validated['slug'] = $slug;
+        $validated['author'] = auth()->user()->name;
+        $validated['is_published'] = true;
+        $validated['published_at'] = now();
+        
+        // Auto-generate excerpt if empty
+        if (empty($validated['excerpt'])) {
+            $validated['excerpt'] = Str::limit(strip_tags($request->content), 150);
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -104,15 +121,18 @@ class ArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'excerpt' => 'required|string|max:500',
+            'excerpt' => 'nullable|string|max:500',
             'category' => 'required|string',
-            'author' => 'required|string|max:255',
             'references' => 'nullable|string',
-            'published_at' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $validated['slug'] = Str::slug($request->title);
+        
+        // Auto-generate excerpt if empty
+        if (empty($validated['excerpt'])) {
+            $validated['excerpt'] = Str::limit(strip_tags($request->content), 150);
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -145,5 +165,37 @@ class ArticleController extends Controller
 
         return redirect()->route('articles.index')
                         ->with('success', 'Artikel berhasil dihapus!');
+    }
+
+    // Like/Unlike artikel
+    public function like($id)
+    {
+        $article = Article::findOrFail($id);
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda harus login terlebih dahulu'
+            ], 401);
+        }
+
+        // Toggle like: jika sudah like, maka unlike
+        if ($article->isLikedBy($user)) {
+            $article->likedByUsers()->detach($user->id);
+            $isLiked = false;
+            $message = 'Like dibatalkan';
+        } else {
+            $article->likedByUsers()->attach($user->id);
+            $isLiked = true;
+            $message = 'Artikel disukai';
+        }
+
+        return response()->json([
+            'success' => true,
+            'likes' => $article->likedByUsers()->count(),
+            'isLiked' => $isLiked,
+            'message' => $message
+        ]);
     }
 }

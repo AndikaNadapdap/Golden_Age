@@ -11,6 +11,7 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'title',
         'slug',
         'excerpt',
@@ -33,6 +34,25 @@ class Article extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Relasi dengan users yang like artikel ini
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'article_user_likes')->withTimestamps();
+    }
+
+    // Check if user has liked this article
+    public function isLikedBy($user)
+    {
+        if (!$user) return false;
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
+    }
+
+    // Get total likes
+    public function getLikesAttribute()
+    {
+        return $this->likedByUsers()->count();
     }
 
     // Auto generate slug dari title

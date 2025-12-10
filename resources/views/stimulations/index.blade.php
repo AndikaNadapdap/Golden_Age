@@ -34,23 +34,6 @@
         .btn-delete:hover { background: #DC2626; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
         .btn-detail { background: #0EA5E9; color: white; }
         .btn-detail:hover { background: #0284C7; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
-
-        .btn-outline-danger {
-            border-color: #EF4444;
-            color: #EF4444;
-            font-weight: 600;
-            padding: 8px 24px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-danger:hover {
-            background: #EF4444;
-            border-color: #EF4444;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-        }
     </style>
 </head>
 <body class="bg-light">
@@ -65,22 +48,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        @if(auth()->check() && auth()->user()->role === 'admin')
-                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Beranda</a>
-                        @else
-                            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
-                        @endif
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('recipes.index') }}">Resep</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a></li>
-                    @if(auth()->check() && auth()->user()->role === 'admin')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('discussions.index') }}">Forum Diskusi</a></li>
-                    @endif
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a></li>
                     @auth
                         @if(auth()->user()->role === 'admin')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('discussions.index') }}">Diskusi</a></li>
                             <li class="nav-item ms-3">
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                     @csrf

@@ -191,21 +191,6 @@
                     <small class="text-muted">Tuliskan sumber referensi artikel. Pisahkan dengan enter untuk setiap referensi.</small>
                 </div>
 
-                <!-- Publish Status -->
-                <div class="mb-4">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" 
-                               type="checkbox" 
-                               id="is_published" 
-                               name="is_published" 
-                               value="1"
-                               {{ old('is_published') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="is_published">
-                            <i class="bi bi-check-circle me-2"></i>Publikasikan artikel sekarang
-                        </label>
-                    </div>
-                </div>
-
                 <!-- Submit Buttons -->
                 <div class="d-flex gap-3">
                     <button type="submit" class="btn btn-primary">

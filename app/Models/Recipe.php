@@ -40,6 +40,25 @@ class Recipe extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    // Relasi dengan users yang like resep ini
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'recipe_user_likes')->withTimestamps();
+    }
+
+    // Check if user has liked this recipe
+    public function isLikedBy($user)
+    {
+        if (!$user) return false;
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
+    }
+
+    // Get total likes
+    public function getLikesAttribute()
+    {
+        return $this->likedByUsers()->count();
+    }
+
     // Auto generate slug
     public static function boot()
     {

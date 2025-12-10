@@ -19,4 +19,23 @@ class Stimulation extends Model
         'image',
         'likes'
     ];
+
+    // Relasi dengan users yang like stimulasi ini
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'stimulation_user_likes')->withTimestamps();
+    }
+
+    // Check if user has liked this stimulation
+    public function isLikedBy($user)
+    {
+        if (!$user) return false;
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
+    }
+
+    // Get total likes
+    public function getLikesAttribute()
+    {
+        return $this->likedByUsers()->count();
+    }
 }

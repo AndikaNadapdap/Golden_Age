@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('min_age_months'); // Usia minimum dalam bulan
             $table->integer('max_age_months'); // Usia maksimum dalam bulan
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->text('tips')->nullable(); // Tips untuk orang tua
             $table->timestamps();

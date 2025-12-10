@@ -12,7 +12,9 @@ class DiscussionController extends Controller
     // Tampilkan daftar diskusi
     public function index(Request $request)
     {
-        $query = Discussion::with('author')->withCount('replies');
+        $query = Discussion::with('author')
+                    ->withCount('replies')
+                    ->whereHas('author'); // Only get discussions with valid user
 
         // Filter by category
         if ($request->has('category') && $request->category) {
@@ -90,15 +92,35 @@ class DiscussionController extends Controller
         return redirect()->route('discussions.index')->with('success', 'Diskusi berhasil dibuat!');
     }
 
-    // Like diskusi
+    // Like/Unlike diskusi
     public function like($id)
     {
         $discussion = Discussion::findOrFail($id);
-        $discussion->incrementLikes();
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda harus login terlebih dahulu'
+            ], 401);
+        }
+
+        // Toggle like: jika sudah like, maka unlike
+        if ($discussion->isLikedBy($user)) {
+            $discussion->likedByUsers()->detach($user->id);
+            $isLiked = false;
+            $message = 'Like dibatalkan';
+        } else {
+            $discussion->likedByUsers()->attach($user->id);
+            $isLiked = true;
+            $message = 'Diskusi disukai';
+        }
 
         return response()->json([
             'success' => true,
-            'likes' => $discussion->likes
+            'likes' => $discussion->likedByUsers()->count(),
+            'isLiked' => $isLiked,
+            'message' => $message
         ]);
     }
 
@@ -122,15 +144,35 @@ class DiscussionController extends Controller
         return back()->with('success', 'Balasan berhasil ditambahkan!');
     }
 
-    // Like reply
+    // Like/Unlike reply
     public function likeReply($id)
     {
         $reply = DiscussionReply::findOrFail($id);
-        $reply->incrementLikes();
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda harus login terlebih dahulu'
+            ], 401);
+        }
+
+        // Toggle like: jika sudah like, maka unlike
+        if ($reply->isLikedBy($user)) {
+            $reply->likedByUsers()->detach($user->id);
+            $isLiked = false;
+            $message = 'Like dibatalkan';
+        } else {
+            $reply->likedByUsers()->attach($user->id);
+            $isLiked = true;
+            $message = 'Reply disukai';
+        }
 
         return response()->json([
             'success' => true,
-            'likes' => $reply->likes
+            'likes' => $reply->likedByUsers()->count(),
+            'isLiked' => $isLiked,
+            'message' => $message
         ]);
     }
 

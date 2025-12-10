@@ -31,7 +31,7 @@
             align-items: center;
             gap: 12px;
             font-weight: 600;
-            color: var(--text-dark) !important;
+            color: #1e293b !important;
         }
 
         .logo {
@@ -53,6 +53,8 @@
             color: #1e293b !important;
             font-weight: 500;
             margin: 0 10px;
+            padding: 8px 0;
+            display: inline-block;
             transition: color 0.3s;
         }
 
@@ -87,23 +89,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
-        }
-
-        .btn-outline-danger {
-            border-color: #EF4444;
-            color: #EF4444;
-            font-weight: 600;
-            padding: 8px 24px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-danger:hover {
-            background: #EF4444;
-            border-color: #EF4444;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .hero-article {
@@ -311,11 +296,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('welcome') }}">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
                 <div class="logo">
-                    <i class="bi bi-heart-fill text-white"></i>
+                    <i class="bi bi-heart-fill"></i>
                 </div>
-                <span class="fw-bold">Paduan 1000 Hari</span>
+                <span>Paduan 1000 Hari</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -323,11 +308,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        @if(auth()->check() && auth()->user()->role === 'admin')
-                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Beranda</a>
-                        @else
-                            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
-                        @endif
+                        <a class="nav-link" href="{{ route('home') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
@@ -338,16 +319,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a>
                     </li>
-                    @if(auth()->check() && auth()->user()->role === 'admin')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('discussions.index') }}">Forum Diskusi</a>
-                        </li>
-                    @endif
                     @auth
                         @if(auth()->user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('discussions.index') }}">Diskusi</a>
+                            </li>
                             <li class="nav-item ms-3">
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                     @csrf

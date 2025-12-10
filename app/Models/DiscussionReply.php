@@ -33,6 +33,25 @@ class DiscussionReply extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    // Relasi dengan users yang like reply ini
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'discussion_reply_user_likes')->withTimestamps();
+    }
+
+    // Check if user has liked this reply
+    public function isLikedBy($user)
+    {
+        if (!$user) return false;
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
+    }
+
+    // Get total likes
+    public function getLikesAttribute()
+    {
+        return $this->likedByUsers()->count();
+    }
+
     // Increment likes
     public function incrementLikes()
     {

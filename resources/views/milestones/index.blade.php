@@ -59,31 +59,41 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('recipes.index') }}">Resep</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a></li>
                     @auth
-                        <li class="nav-item dropdown ms-3">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                @if(Auth::user()->role === 'admin')
-                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard Admin</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
-                                @elseif(Auth::user()->role === 'parent')
-                                    <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i class="bi bi-person me-2"></i>Profile Saya</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('tracker.index') }}"><i class="bi bi-activity me-2"></i>Tracker Sensorik</a></li>
-                                @else
-                                    <li><a class="dropdown-item" href="{{ route('profile.doctor') }}"><i class="bi bi-person-badge me-2"></i>Profile Saya</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
-                                @endif
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
-                                    </a>
-                                </li>
-                            </ul>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                        </li>
+                        @if(auth()->user()->role === 'admin')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('discussions.index') }}">Diskusi</a></li>
+                            <li class="nav-item ms-3">
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="bi bi-box-arrow-right me-1"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @else
+                            <li class="nav-item dropdown ms-3">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    @if(Auth::user()->role === 'parent')
+                                        <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i class="bi bi-person me-2"></i>Profile Saya</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('tracker.index') }}"><i class="bi bi-activity me-2"></i>Tracker Sensorik</a></li>
+                                    @else
+                                        <li><a class="dropdown-item" href="{{ route('profile.doctor') }}"><i class="bi bi-person-badge me-2"></i>Profile Saya</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
+                                    @endif
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                            </li>
+                        @endif
                     @else
                         <li class="nav-item ms-3"><a href="{{ route('login') }}" class="btn btn-outline-primary">Masuk</a></li>
                         <li class="nav-item ms-2"><a href="{{ route('register') }}" class="btn btn-primary">Daftar Gratis</a></li>

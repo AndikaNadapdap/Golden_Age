@@ -47,9 +47,36 @@ class MilestoneController extends Controller
             'tips' => 'nullable|string',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        // Map age_range to min and max months
+        $ageRanges = [
+            '0-3 bulan' => ['min' => 0, 'max' => 3],
+            '4-6 bulan' => ['min' => 4, 'max' => 6],
+            '7-9 bulan' => ['min' => 7, 'max' => 9],
+            '10-12 bulan' => ['min' => 10, 'max' => 12],
+        ];
 
-        Milestone::create($validated);
+        $ages = $ageRanges[$validated['age_range']];
+        
+        // Generate unique slug
+        $slug = Str::slug($validated['name']);
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Milestone::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+        
+        Milestone::create([
+            'title' => $validated['name'],
+            'slug' => $slug,
+            'category' => $validated['category'],
+            'age_range' => $validated['age_range'],
+            'min_age_months' => $ages['min'],
+            'max_age_months' => $ages['max'],
+            'description' => $validated['description'],
+            'tips' => $validated['tips'],
+        ]);
 
         return redirect()->route('milestones.index')->with('success', 'Milestone berhasil ditambahkan!');
     }
@@ -72,9 +99,36 @@ class MilestoneController extends Controller
             'tips' => 'nullable|string',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        // Map age_range to min and max months
+        $ageRanges = [
+            '0-3 bulan' => ['min' => 0, 'max' => 3],
+            '4-6 bulan' => ['min' => 4, 'max' => 6],
+            '7-9 bulan' => ['min' => 7, 'max' => 9],
+            '10-12 bulan' => ['min' => 10, 'max' => 12],
+        ];
 
-        $milestone->update($validated);
+        $ages = $ageRanges[$validated['age_range']];
+
+        // Generate unique slug
+        $slug = Str::slug($validated['name']);
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Milestone::where('slug', $slug)->where('id', '!=', $milestone->id)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        $milestone->update([
+            'title' => $validated['name'],
+            'slug' => $slug,
+            'category' => $validated['category'],
+            'age_range' => $validated['age_range'],
+            'min_age_months' => $ages['min'],
+            'max_age_months' => $ages['max'],
+            'description' => $validated['description'],
+            'tips' => $validated['tips'],
+        ]);
 
         return redirect()->route('milestones.index')->with('success', 'Milestone berhasil diperbarui!');
     }

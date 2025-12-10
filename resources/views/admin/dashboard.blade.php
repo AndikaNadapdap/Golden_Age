@@ -7,6 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
     <style>
+        :root {
+            --primary-color: #EC4899;
+            --secondary-color: #5CE1E6;
+        }
+
         body {
             background-color: #f8f9fa;
         }
@@ -28,7 +33,7 @@
         .logo {
             width: 45px;
             height: 45px;
-            background: #5CE1E6;
+            background: var(--secondary-color);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -44,11 +49,13 @@
             color: #1e293b !important;
             font-weight: 500;
             margin: 0 10px;
+            padding: 8px 0;
+            display: inline-block;
             transition: color 0.3s;
         }
 
         .nav-link:hover {
-            color: #667eea !important;
+            color: var(--primary-color) !important;
         }
 
         .btn-outline-danger {
@@ -64,8 +71,6 @@
             background: #EF4444;
             border-color: #EF4444;
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .admin-header {
@@ -100,9 +105,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('admin.dashboard') }}">
-                <div class="logo"><i class="bi bi-heart-fill"></i></div>
-                <span class="fw-bold">Paduan 1000 Hari</span>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <div class="logo">
+                    <i class="bi bi-heart-fill"></i>
+                </div>
+                <span>Paduan 1000 Hari</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -110,7 +117,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('home') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
@@ -125,7 +132,7 @@
                         <a class="nav-link" href="{{ route('milestones.index') }}">Milestone</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('discussions.index') }}">Forum Diskusi</a>
+                        <a class="nav-link" href="{{ route('discussions.index') }}">Diskusi</a>
                     </li>
                     <li class="nav-item ms-3">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">

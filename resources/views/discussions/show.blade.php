@@ -112,7 +112,6 @@
             </div>
 
             <div class="stats-row">
-                <span><i class="bi bi-eye me-2"></i>{{ $discussion->views }} views</span>
                 <span><i class="bi bi-chat me-2"></i>{{ $discussion->replies_count }} balasan</span>
                 <button onclick="likeDiscussion({{ $discussion->id }})" class="like-btn border-0 bg-transparent p-0" id="likeBtn">
                     <i class="bi bi-heart me-1"></i><span id="likeCount">{{ $discussion->likes }}</span>

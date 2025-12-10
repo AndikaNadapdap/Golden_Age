@@ -12,6 +12,7 @@ class Milestone extends Model
         'min_age_months',
         'max_age_months',
         'title',
+        'slug',
         'description',
         'tips'
     ];

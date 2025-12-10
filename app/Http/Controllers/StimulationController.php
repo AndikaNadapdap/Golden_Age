@@ -152,15 +152,35 @@ class StimulationController extends Controller
                         ->with('success', 'Stimulasi berhasil dihapus!');
     }
 
+    // Like/Unlike stimulasi
     public function like($id)
     {
         $stimulation = Stimulation::findOrFail($id);
-        $stimulation->increment('likes');
-        $stimulation->refresh();
-        
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda harus login terlebih dahulu'
+            ], 401);
+        }
+
+        // Toggle like: jika sudah like, maka unlike
+        if ($stimulation->isLikedBy($user)) {
+            $stimulation->likedByUsers()->detach($user->id);
+            $isLiked = false;
+            $message = 'Like dibatalkan';
+        } else {
+            $stimulation->likedByUsers()->attach($user->id);
+            $isLiked = true;
+            $message = 'Stimulasi disukai';
+        }
+
         return response()->json([
             'success' => true,
-            'likes' => $stimulation->likes
+            'likes' => $stimulation->likedByUsers()->count(),
+            'isLiked' => $isLiked,
+            'message' => $message
         ]);
     }
 }

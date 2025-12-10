@@ -245,8 +245,12 @@ Kapan Harus Konsultasi:
             ],
         ];
 
+        // Get admin user
+        $admin = User::where('role', 'admin')->first();
+
         foreach ($articles as $articleData) {
             Article::create([
+                'user_id' => $admin->id,
                 'title' => $articleData['title'],
                 'slug' => Str::slug($articleData['title']),
                 'content' => $articleData['content'],

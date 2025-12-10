@@ -257,7 +257,6 @@
                     <div class="article-meta">
                         <span><i class="bi bi-person"></i>{{ $article->author }}</span>
                         <span><i class="bi bi-calendar"></i>{{ $article->published_at->format('d M Y') }}</span>
-                        <span><i class="bi bi-eye"></i>{{ $article->views }} views</span>
                     </div>
                 </div>
             </div>

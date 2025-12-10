@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Milestone;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class MilestoneSeeder extends Seeder
 {
@@ -224,6 +225,7 @@ class MilestoneSeeder extends Seeder
         ];
 
         foreach ($milestones as $milestone) {
+            $milestone['slug'] = Str::slug($milestone['title']);
             Milestone::create($milestone);
         }
     }

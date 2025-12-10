@@ -81,21 +81,28 @@ class RecipeController extends Controller
             'servings' => 'required|integer',
             'difficulty' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'is_published' => 'boolean',
         ]);
 
         $validated['user_id'] = auth()->id();
-        $validated['slug'] = Str::slug($request->title);
+        
+        // Generate unique slug
+        $slug = Str::slug($request->title);
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Recipe::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+        
+        $validated['slug'] = $slug;
+        $validated['is_published'] = true;
+        $validated['published_at'] = now();
 
         // Handle image upload
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('recipes', 'public');
             $validated['image'] = $imagePath;
-        }
-
-        // Set published_at
-        if ($request->is_published) {
-            $validated['published_at'] = now();
         }
 
         Recipe::create($validated);
@@ -164,16 +171,35 @@ class RecipeController extends Controller
                         ->with('success', 'Resep berhasil dihapus!');
     }
 
-    // Like resep
+    // Like/Unlike resep
     public function like($id)
     {
         $recipe = Recipe::findOrFail($id);
-        $recipe->increment('likes');
-        $recipe->refresh();
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda harus login terlebih dahulu'
+            ], 401);
+        }
+
+        // Toggle like: jika sudah like, maka unlike
+        if ($recipe->isLikedBy($user)) {
+            $recipe->likedByUsers()->detach($user->id);
+            $isLiked = false;
+            $message = 'Like dibatalkan';
+        } else {
+            $recipe->likedByUsers()->attach($user->id);
+            $isLiked = true;
+            $message = 'Resep disukai';
+        }
 
         return response()->json([
             'success' => true,
-            'likes' => $recipe->likes
+            'likes' => $recipe->likedByUsers()->count(),
+            'isLiked' => $isLiked,
+            'message' => $message
         ]);
     }
 }
