@@ -156,7 +156,11 @@ class StimulationController extends Controller
     {
         $stimulation = Stimulation::findOrFail($id);
         $stimulation->increment('likes');
+        $stimulation->refresh();
         
-        return back()->with('success', 'Terima kasih atas dukungannya!');
+        return response()->json([
+            'success' => true,
+            'likes' => $stimulation->likes
+        ]);
     }
 }

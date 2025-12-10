@@ -10,6 +10,64 @@
         body {
             background-color: #f8f9fa;
         }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #1e293b !important;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: #5CE1E6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .nav-link {
+            color: #1e293b !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+
+        .btn-outline-danger {
+            border-color: #EF4444;
+            color: #EF4444;
+            font-weight: 600;
+            padding: 8px 24px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-danger:hover {
+            background: #EF4444;
+            border-color: #EF4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
         .admin-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -40,37 +98,36 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-heart-fill text-primary"></i>
-                <strong>Paduan 1000 Hari</strong>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('admin.dashboard') }}">
+                <div class="logo"><i class="bi bi-heart-fill"></i></div>
+                <span class="fw-bold">Paduan 1000 Hari</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle me-1"></i>{{ auth()->user()->name }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item active" href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-speedometer2 me-2"></i>Dashboard Admin
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('recipes.index') }}">Resep</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

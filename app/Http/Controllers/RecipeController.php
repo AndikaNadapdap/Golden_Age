@@ -168,8 +168,12 @@ class RecipeController extends Controller
     public function like($id)
     {
         $recipe = Recipe::findOrFail($id);
-        $recipe->incrementLikes();
+        $recipe->increment('likes');
+        $recipe->refresh();
 
-        return response()->json(['likes' => $recipe->likes]);
+        return response()->json([
+            'success' => true,
+            'likes' => $recipe->likes
+        ]);
     }
 }

@@ -34,6 +34,23 @@
         .btn-delete:hover { background: #DC2626; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
         .btn-detail { background: #0EA5E9; color: white; }
         .btn-detail:hover { background: #0284C7; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+
+        .btn-outline-danger {
+            border-color: #EF4444;
+            color: #EF4444;
+            font-weight: 600;
+            padding: 8px 24px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-danger:hover {
+            background: #EF4444;
+            border-color: #EF4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -48,38 +65,47 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
+                    <li class="nav-item">
+                        @if(auth()->check() && auth()->user()->role === 'admin')
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Beranda</a>
+                        @else
+                            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
+                        @endif
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('recipes.index') }}">Resep</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('stimulations.index') }}">Stimulasi & Permainan</a></li>
                     @auth
-                        <li class="nav-item dropdown ms-3">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                @if(auth()->user()->role === 'admin')
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                            <i class="bi bi-speedometer2 me-2"></i>Dashboard Admin
-                                        </a>
-                                    </li>
-                                @else
+                        @if(auth()->user()->role === 'admin')
+                            <li class="nav-item ms-3">
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="bi bi-box-arrow-right me-1"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @else
+                            <li class="nav-item dropdown ms-3">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i class="bi bi-person me-2"></i>Profile Saya</a></li>
                                     <li><a class="dropdown-item" href="{{ route('discussions.index') }}"><i class="bi bi-chat-dots me-2"></i>Forum Diskusi</a></li>
                                     @if(auth()->user()->role === 'parent')
                                         <li><a class="dropdown-item" href="{{ route('tracker.index') }}"><i class="bi bi-activity me-2"></i>Tracker Sensorik</a></li>
                                     @endif
-                                @endif
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
-                                    </a>
-                                </li>
-                            </ul>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                        </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                            </li>
+                        @endif
                     @else
                         <li class="nav-item ms-3"><a href="{{ route('login') }}" class="btn btn-outline-primary">Masuk</a></li>
                         <li class="nav-item ms-2"><a href="{{ route('register') }}" class="btn btn-primary">Daftar Gratis</a></li>
