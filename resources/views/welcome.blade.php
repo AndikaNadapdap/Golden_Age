@@ -376,16 +376,46 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1>Dampingi 1000 Hari Pertama Si Kecil</h1>
-                    <p>Platform lengkap untuk memantau tumbuh kembang anak Anda dari masa kehamilan hingga usia 2 tahun dengan panduan dari ahli.</p>
-                    <div class="d-flex gap-3">
-                        <a href="{{ route('register') }}" class="btn btn-light btn-lg">
-                            <i class="bi bi-person-plus me-2"></i>Mulai Sekarang
-                        </a>
-                        <a href="#fitur" class="btn btn-outline-light btn-lg">
-                            <i class="bi bi-play-circle me-2"></i>Pelajari Lebih Lanjut
-                        </a>
-                    </div>
+                    @auth
+                        <!-- Sambutan untuk user yang sudah login -->
+                        <div class="mb-3">
+                            <span class="badge bg-light text-primary px-3 py-2" style="font-size: 14px;">
+                                <i class="bi bi-check-circle-fill me-1"></i>Selamat datang kembali!
+                            </span>
+                        </div>
+                        <h1>Halo, {{ Auth::user()->name }}! 👋</h1>
+                        <p>Senang melihat Anda kembali. Jelajahi berbagai fitur untuk mendampingi tumbuh kembang si kecil.</p>
+                                               <div class="d-flex gap-3 flex-wrap">
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.dashboard') }}" class="btn btn-light btn-lg">
+                                    <i class="bi bi-speedometer2 me-2"></i>Dashboard Admin
+                                </a>
+                            @elseif(auth()->user()->role === 'doctor')
+                                <a href="{{ route('discussions.index') }}" class="btn btn-light btn-lg">
+                                    <i class="bi bi-chat-dots me-2"></i>Akses Forum Diskusi
+                                </a>
+                            @elseif(auth()->user()->role === 'parent')
+                                <a href="{{ route('articles.index') }}" class="btn btn-light btn-lg">
+                                    <i class="bi bi-journal-text me-2"></i>Baca Artikel
+                                </a>
+                                <a href="{{ route('tracker.index') }}" class="btn btn-outline-light btn-lg">
+                                    <i class="bi bi-activity me-2"></i>Tracker Sensorik
+                                </a>
+                            @endif
+                        </div>
+                    @else
+                        <!-- Konten untuk guest/belum login -->
+                        <h1>Dampingi 1000 Hari Pertama Si Kecil</h1>
+                        <p>Platform lengkap untuk memantau tumbuh kembang anak Anda dari masa kehamilan hingga usia 2 tahun dengan panduan dari ahli.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="{{ route('register') }}" class="btn btn-light btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Mulai Sekarang
+                            </a>
+                            <a href="#fitur" class="btn btn-outline-light btn-lg">
+                                <i class="bi bi-play-circle me-2"></i>Pelajari Lebih Lanjut
+                            </a>
+                        </div>
+                    @endauth
                 </div>
                 <div class="col-lg-6 mt-5 mt-lg-0">
                     <div class="text-center">
@@ -460,17 +490,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Siap Memulai Perjalanan Anda?</h2>
-            <p>Bergabunglah dengan ribuan orang tua yang telah mempercayakan kami untuk mendampingi tumbuh kembang buah hati mereka.</p>
-            <a href="{{ route('register') }}" class="btn btn-light btn-lg">
-                <i class="bi bi-person-plus me-2"></i>Daftar Gratis Sekarang
-            </a>
         </div>
     </section>
 

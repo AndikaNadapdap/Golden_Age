@@ -170,6 +170,17 @@
                             <img id="preview" src="" alt="Preview">
                         </div>
                     </div>
+
+                    <!-- Video Tutorial -->
+                    <div class="col-md-12 mb-3">
+                        <label for="visio" class="form-label">Video Tutorial <span class="badge bg-info">Optional</span></label>
+                        <input type="file" class="form-control @error('visio') is-invalid @enderror" 
+                               id="visio" name="visio" accept="video/*">
+                        <small class="text-muted d-block mt-1">Format: MP4, MOV, AVI, WEBM, max 50MB</small>
+                        @error('visio')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
@@ -198,6 +209,25 @@
                     previewDiv.style.display = 'block';
                 }
                 reader.readAsDataURL(file);
+            }
+        }
+
+        function previewVideo(event) {
+            const preview = document.getElementById('videoPreview');
+            const info = document.getElementById('videoInfo');
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    info.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+                info.style.display = 'none';
             }
         }
     </script>

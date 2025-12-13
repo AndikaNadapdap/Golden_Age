@@ -87,6 +87,24 @@
                     </div>
                 @endif
 
+                <!-- Video tutorial section -->
+                @if($recipe->visio)
+                    <div class="mb-4">
+                        <h3 class="mb-3"><i class="bi bi-play-circle me-2" style="color: var(--primary-color);"></i>Video Tutorial</h3>
+                        <div class="ratio ratio-16x9" style="border-radius: 12px; overflow: hidden;">
+                            <video controls preload="metadata" style="object-fit: cover;">
+                                <source src="{{ asset('storage/' . $recipe->visio) }}" type="video/mp4">
+                                Browser Anda tidak mendukung video HTML5.
+                            </video>
+                        </div>
+                        @if($recipe->video_duration)
+                            <small class="text-muted">
+                                <i class="bi bi-clock me-1"></i>Durasi: {{ $recipe->formatted_duration }}
+                            </small>
+                        @endif
+                    </div>
+                @endif
+
                 <h1 class="fw-bold mb-3">{{ $recipe->title }}</h1>
                 <p class="text-muted mb-4">{{ $recipe->description }}</p>
 

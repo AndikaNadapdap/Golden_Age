@@ -81,6 +81,7 @@ class RecipeController extends Controller
             'servings' => 'required|integer',
             'difficulty' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'visio' => 'nullable|file|mimes:mp4,mov,avi,webm|max:51200', // max 50MB
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -103,6 +104,12 @@ class RecipeController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('recipes', 'public');
             $validated['image'] = $imagePath;
+        }
+
+        // Handle visio upload
+        if ($request->hasFile('visio')) {
+            $visioPath = $request->file('visio')->store('recipes/visio', 'public');
+            $validated['visio'] = $visioPath;
         }
 
         Recipe::create($validated);

@@ -22,6 +22,7 @@ class Recipe extends Model
         'servings',
         'difficulty',
         'image',
+        'visio',
         'user_id',
         'is_published',
         'published_at',

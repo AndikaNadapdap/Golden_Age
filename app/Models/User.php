@@ -20,6 +20,7 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'avatar',
+        'phone',
     ];
 
     // Kolom yang disembunyikan saat model di-serialize

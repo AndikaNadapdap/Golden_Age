@@ -77,6 +77,24 @@
                 </a>
             </div>
 
+            <!-- Video tutorial section -->
+            @if($stimulation->visio)
+                <div class="mb-4 p-4" style="background: #f9f9fa; border-radius: 12px;">
+                    <h3 class="mb-3"><i class="bi bi-play-circle me-2" style="color: var(--primary-color);"></i>Video Tutorial</h3>
+                    <div class="ratio ratio-16x9" style="border-radius: 8px; overflow: hidden;">
+                        <video controls preload="metadata" style="object-fit: cover;">
+                            <source src="{{ asset('storage/' . $stimulation->visio) }}" type="video/mp4">
+                            Browser Anda tidak mendukung video HTML5.
+                        </video>
+                    </div>
+                    @if($stimulation->video_duration)
+                        <small class="text-muted mb-2 d-block">
+                            <i class="bi bi-clock me-1"></i>Durasi: {{ $stimulation->formatted_duration }}
+                        </small>
+                    @endif
+                </div>
+            @endif
+
             <div class="mb-4">
                 <span class="category-badge">{{ $stimulation->category }}</span>
                 <span class="badge bg-secondary ms-2">{{ $stimulation->age_range }}</span>

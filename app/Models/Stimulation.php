@@ -17,6 +17,7 @@ class Stimulation extends Model
         'benefits',
         'duration',
         'image',
+        'visio',
         'likes'
     ];
 

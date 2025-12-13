@@ -68,14 +68,22 @@ class StimulationController extends Controller
             'benefits' => 'nullable|string',
             'duration' => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'visio' => 'nullable|file|mimes:mp4,mov,avi,webm|max:51200',
         ]);
 
         $validated['slug'] = Str::slug($request->title);
+        $validated['age_range'] = $request->input('age_range', '0-3 bulan');
 
         // Handle image upload
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('stimulations', 'public');
             $validated['image'] = $imagePath;
+        }
+
+        // Handle visio upload
+        if ($request->hasFile('visio')) {
+            $visioPath = $request->file('visio')->store('stimulations/visio', 'public');
+            $validated['visio'] = $visioPath;
         }
 
         Stimulation::create($validated);
@@ -96,13 +104,6 @@ class StimulationController extends Controller
     {
         $stimulation = Stimulation::findOrFail($id);
 
-        // Debug: cek apakah file diterima
-        \Log::info('Has File Image: ' . ($request->hasFile('image') ? 'YES' : 'NO'));
-        if ($request->hasFile('image')) {
-            \Log::info('File Name: ' . $request->file('image')->getClientOriginalName());
-            \Log::info('File Size: ' . $request->file('image')->getSize());
-        }
-
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -113,21 +114,59 @@ class StimulationController extends Controller
             'benefits' => 'nullable|string',
             'duration' => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:51200',
+            'remove_video' => 'nullable|boolean',
         ]);
 
         $validated['slug'] = Str::slug($request->title);
+        $validated['age_range'] = $request->input('age_range', '0-3 bulan');
 
-        // Handle image upload
+        // Handle image upload with Cloudinary
         if ($request->hasFile('image')) {
-            // Hapus image lama jika ada
-            if ($stimulation->image && Storage::disk('public')->exists($stimulation->image)) {
-                Storage::disk('public')->delete($stimulation->image);
-            }
+            try {
+                // Delete old image from Cloudinary if exists
+                if ($stimulation->cloudinary_public_id) {
+                    $this->cloudinary->deleteImage($stimulation->cloudinary_public_id);
+                }
 
-            $imagePath = $request->file('image')->store('stimulations', 'public');
-            $validated['image'] = $imagePath;
-            
-            \Log::info('Image saved to: ' . $imagePath);
+                $result = $this->cloudinary->uploadImage($request->file('image'), 'stimulations');
+                $validated['cloudinary_public_id'] = $result['public_id'];
+                $validated['cloudinary_url'] = $result['secure_url'];
+                $validated['image'] = $result['secure_url'];
+            } catch (\Exception $e) {
+                return back()->withErrors(['image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            }
+        }
+
+        // Handle video removal
+        if ($request->input('remove_video')) {
+            if ($stimulation->video_public_id) {
+                try {
+                    $this->cloudinary->deleteImage($stimulation->video_public_id);
+                } catch (\Exception $e) {
+                    // Log error but continue
+                }
+            }
+            $validated['video_url'] = null;
+            $validated['video_public_id'] = null;
+            $validated['video_duration'] = null;
+        }
+
+        // Handle video upload with Cloudinary
+        if ($request->hasFile('video')) {
+            try {
+                // Delete old video from Cloudinary if exists
+                if ($stimulation->video_public_id) {
+                    $this->cloudinary->deleteImage($stimulation->video_public_id);
+                }
+
+                $result = $this->cloudinary->uploadVideo($request->file('video'), 'stimulations/videos');
+                $validated['video_public_id'] = $result['public_id'];
+                $validated['video_url'] = $result['secure_url'];
+                $validated['video_duration'] = $result['duration'] ?? null;
+            } catch (\Exception $e) {
+                return back()->withErrors(['video' => 'Gagal mengupload video: ' . $e->getMessage()]);
+            }
         }
 
         $stimulation->update($validated);

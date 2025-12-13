@@ -287,9 +287,14 @@
                 Masuk dengan Google
             </a>
 
-            <a href="{{ route('auth.facebook') }}" class="btn btn-outline-primary w-100">
+            <a href="{{ route('auth.facebook') }}" class="btn btn-outline-primary w-100 mb-2">
                 <i class="bi bi-facebook me-2"></i>
                 Masuk dengan Facebook
+            </a>
+
+            <a href="{{ route('otp.request.form') }}" class="btn btn-outline-success w-100 mb-4" style="margin-top: 8px;">
+                <i class="bi bi-whatsapp me-2"></i>
+                Masuk dengan WhatsApp
             </a>
 
             <div class="register-link">
