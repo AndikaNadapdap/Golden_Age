@@ -563,7 +563,11 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Paduan 1000 Hari. All rights reserved.</p>
+                <p>
+                    &copy; 2025 Paduan 1000 Hari. All rights reserved. |
+                    <a href="/privacy-policy" target="_blank">Privacy and Policy</a> |
+                    Contact: <a href="https://wa.me/6282167114827" target="_blank">+62 821-6711-4827</a>
+                </p>
             </div>
         </div>
     </footer>

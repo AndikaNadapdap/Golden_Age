@@ -252,7 +252,11 @@
         <div class="pill"><span class="dot"></span> Hanya untuk akun <b>Orang Tua (User)</b></div>
       </div>
 
-      <div class="footer">© {{ date('Y') }} Panduan 1000 Hari • Aman & sederhana</div>
+      <div class="footer">
+        © {{ date('Y') }} Panduan 1000 Hari • Aman & sederhana |
+        <a href="/privacy-policy" target="_blank">Privacy and Policy</a> |
+        Contact: <a href="https://wa.me/6282167114827" target="_blank">+62 821-6711-4827</a>
+      </div>
     </div>
 
     <div class="card">

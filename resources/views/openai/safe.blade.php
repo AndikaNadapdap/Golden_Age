@@ -39,7 +39,9 @@
 </main>
 
 <footer class="mt-5 py-4 text-center text-muted">
-    &copy; {{ date('Y') }} Paduan 1000 Hari
+    &copy; {{ date('Y') }} Paduan 1000 Hari |
+    <a href="/privacy-policy" target="_blank">Privacy and Policy</a> |
+    Contact: <a href="https://wa.me/6282167114827" target="_blank">+62 821-6711-4827</a>
 </footer>
 
 </body>
