@@ -185,3 +185,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/tracker/progress', [TrackerController::class, 'progress'])->name('admin.tracker.progress');
     Route::get('/admin/tracker/detail/{user}', [TrackerController::class, 'detail'])->name('admin.tracker.detail');
 });
+
+// =======================
+// STATIC PAGES
+// =======================
+Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
+Route::view('/delete-user-data', 'delete-user-data')->name('delete.user.data');
+Route::view('/terms', 'terms')->name('terms');

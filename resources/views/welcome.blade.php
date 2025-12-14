@@ -527,9 +527,9 @@
                 <div class="col-lg-4 col-md-4 mb-4">
                     <h5>Kebijakan</h5>
                      <ul>
-                        <li><a href="/privacy-policy">kebijakan privasi</a></li>
-                        <li><a href="/data-deletion">Penghapusan Data Pengguna</a></li>
-                        <li><a href="/terms-and-conditions">Syarat & Ketentuan</a></li>
+                        <li><a href="{{ route('privacy.policy') }}">kebijakan privasi</a></li>
+                        <li><a href="{{ route('delete.user.data') }}">Penghapusan Data Pengguna</a></li>
+                        <li><a href="{{ route('terms') }}">Syarat & Ketentuan</a></li>
                     </ul>
                 </div>
             </div>
