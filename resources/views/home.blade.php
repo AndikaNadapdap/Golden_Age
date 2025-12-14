@@ -529,8 +529,8 @@
                         <h5 class="mb-0">Panduan 1000 Hari</h5>
                     </div>
                     <p>Platform terpercaya untuk mendampingi 1000 hari pertama kehidupan buah hati Anda.</p>
-                    <p><i class="bi bi-envelope me-2"></i>info@panduan1000hari.com</p>
-                    <p><i class="bi bi-telephone me-2"></i>+62 812-3456-7890</p>
+                    <p><i class="bi bi-envelope me-2"></i>andikanadapdap02@gmail.com</p>
+                    <p><i class="bi bi-telephone me-2"></i>+62 821-3456-7890</p>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4">
                     <h5>Navigasi</h5>
@@ -551,13 +551,12 @@
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4 mb-4">
-                    <h5>Ikuti Kami</h5>
-                    <div class="d-flex gap-3 mb-3">
-                        <a href="#"><i class="bi bi-facebook fs-4"></i></a>
-                        <a href="#"><i class="bi bi-instagram fs-4"></i></a>
-                        <a href="#"><i class="bi bi-twitter fs-4"></i></a>
-                        <a href="#"><i class="bi bi-youtube fs-4"></i></a>
-                    </div>
+                    <h5>Kebijakan</h5>
+                     <ul>
+                        <li><a href="/privacy-policy">kebijakan privasi</a></li>
+                        <li><a href="/data-deletion">Penghapusan Data Pengguna</a></li>
+                        <li><a href="/terms-and-conditions">Syarat & Ketentuan</a></li>
+                    </ul>
                     <p class="mt-3"><strong>Newsletter</strong></p>
                     <p class="small">Dapatkan tips parenting terbaru langsung ke email Anda.</p>
                 </div>
