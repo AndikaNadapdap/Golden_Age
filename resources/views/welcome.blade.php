@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paduan 1000 Hari - Panduan Tumbuh Kembang Anak</title>
+    <title>Panduan 1000 Hari - Panduan Tumbuh Kembang Anak</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -311,7 +311,7 @@
                 <div class="logo">
                     <i class="bi bi-heart-fill"></i>
                 </div>
-                <span>Paduan 1000 Hari</span>
+                <span>Panduan 1000 Hari</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -502,7 +502,7 @@
                         <div class="logo">
                             <i class="bi bi-heart-fill"></i>
                         </div>
-                        <h5 class="mb-0">Paduan 1000 Hari</h5>
+                        <h5 class="mb-0">Panduan 1000 Hari</h5>
                     </div>
                     <p>Platform terpercaya untuk mendampingi 1000 hari pertama kehidupan buah hati Anda.</p>
                 </div>
@@ -536,7 +536,7 @@
             </div>
             <div class="footer-bottom">
                 <p>
-                    &copy; 2025 Paduan 1000 Hari. All rights reserved. |
+                    &copy; 2025 Panduan 1000 Hari. All rights reserved. |
                     <a href="/privacy-policy" target="_blank">Privacy and Policy</a> |
                     Contact: <a href="https://wa.me/6282167114827" target="_blank">+62 821-6711-4827</a>
                 </p>

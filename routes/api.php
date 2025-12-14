@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FacebookAuthController;
 use App\Http\Controllers\Api\NotificationTokenController;
 use App\Http\Controllers\Api\ReminderController;
+use App\Http\Controllers\GoogleAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,10 @@ Route::prefix('auth/facebook')->group(function () {
             Route::post('/reminders', [ReminderController::class, 'store']);
         });
     });
+});
+
+// Google OAuth API
+Route::prefix('auth/google')->group(function () {
+    Route::get('/login-url', [GoogleAuthController::class, 'apiRedirectToGoogle']);
+    Route::get('/callback', [GoogleAuthController::class, 'apiHandleGoogleCallback']);
 });
