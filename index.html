@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kirim Notifikasi Email</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; background-color: #f4f4f9; }
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            max-width: 500px; 
+            margin: auto; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        h2 { text-align: center; color: #333; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            box-sizing: border-box; /* Agar padding tidak merusak lebar */
+        }
+        button { 
+            width: 100%; 
+            margin-top: 20px; 
+            padding: 12px; 
+            background-color: #1a82e2; /* Warna khas SendGrid */
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            cursor: pointer; 
+        }
+        button:hover { background-color: #1466b3; }
+        #status { text-align: center; margin-top: 15px; color: green; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>📧 Notifikasi via Email</h2>
+
+        <label>Email Tujuan</label>
+        <input type="email" id="tujuan" placeholder="contoh@domain.com">
+
+        <label>Subjek</label>
+        <input type="text" id="subjek" placeholder="Penting: Update Sistem">
+
+        <label>Pesan</label>
+        <textarea id="pesan" rows="5" placeholder="Tulis pesan Anda di sini..."></textarea>
+
+        <button onclick="kirimEmail()" id="btnKirim">Kirim Sekarang</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        async function kirimEmail() {
+            const btn = document.getElementById('btnKirim');
+            const status = document.getElementById('status');
+            
+            // Ambil nilai dari form
+            const tujuan = document.getElementById('tujuan').value;
+            const subjek = document.getElementById('subjek').value;
+            const pesan = document.getElementById('pesan').value;
+
+            // Validasi sederhana
+            if(!tujuan || !pesan) {
+                alert("Mohon isi email tujuan dan pesan.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Mengirim...";
+            status.innerText = "";
+
+            try {
+                // Kirim data ke server lokal kita
+                const response = await fetch('http://localhost:3000/kirim-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        emailTujuan: tujuan, 
+                        subjek: subjek, 
+                        pesan: pesan 
+                    })
+                });
+
+                const hasil = await response.json();
+
+                if (hasil.success) {
+                    status.style.color = "green";
+                    status.innerText = "✅ Berhasil! Email telah dikirim.";
+                } else {
+                    status.style.color = "red";
+                    status.innerText = "❌ Gagal: " + hasil.error;
+                }
+            } catch (err) {
+                status.style.color = "red";
+                status.innerText = "❌ Error koneksi ke server.";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Kirim Sekarang";
+            }
+        }
+    </script>
+</body>
+</html>

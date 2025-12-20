@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Events\ArticleUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -72,7 +73,8 @@ class ArticleController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $validated['user_id'] = auth()->id();
+        // Set author instead of user_id
+        // $validated['user_id'] = auth()->id(); // Commented out for now
         
         // Generate unique slug
         $slug = Str::slug($request->title);
@@ -100,10 +102,13 @@ class ArticleController extends Controller
             $validated['image'] = $imagePath;
         }
 
-        Article::create($validated);
+        $article = Article::create($validated);
+
+        // Trigger event untuk mengirim email ke parent
+        event(new ArticleUpdated($article));
 
         return redirect()->route('articles.index')
-                        ->with('success', 'Artikel berhasil ditambahkan!');
+                        ->with('success', 'Artikel berhasil ditambahkan dan notifikasi email telah dikirim ke orang tua!');
     }
 
     // Tampilkan form edit artikel (Admin)
@@ -147,8 +152,11 @@ class ArticleController extends Controller
 
         $article->update($validated);
 
+        // Trigger event untuk mengirim email ke parent ketika artikel diupdate
+        event(new ArticleUpdated($article));
+
         return redirect()->route('articles.index')
-                        ->with('success', 'Artikel berhasil diupdate!');
+                        ->with('success', 'Artikel berhasil diupdate dan notifikasi email telah dikirim ke orang tua!');
     }
 
     // Hapus artikel (Admin)

@@ -36,6 +36,11 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
+// Test admin route
+Route::get('/test-admin', function () {
+    return view('test-admin');
+})->middleware('auth');
+
 // =======================
 // AUTH (EMAIL/PASSWORD)
 // =======================

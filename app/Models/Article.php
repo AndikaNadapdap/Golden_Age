@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        // 'user_id', // Temporarily commented out
         'title',
         'slug',
         'excerpt',

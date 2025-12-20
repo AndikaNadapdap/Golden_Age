@@ -29,6 +29,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Cast attributes
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
     // Relasi ke children (untuk orang tua)
     public function children()
     {
